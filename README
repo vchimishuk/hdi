@@ -1,0 +1,25 @@
+README
+    hdi is HDD idle daemon.
+    It is used to put HDD into standby mode in case of inactivity. Similar
+    functionality is provided by `hdparm -S` and hd-idle. `hdparm -S` and
+    hd-idle do not work with some HDDs especially connected via USB.
+    hdi is designed specifically for such cases.
+
+INSTALL
+    As a regular Go program, you can install it with `go get` and manage
+    service by yourself.
+    go get github.com/vchimishuk/hdi
+
+    But the best way is to build Debian package and use systemd to manage
+    hdi daemon.
+
+    See /etc/hdi.conf file for more details about hdi configuration.
+
+AUTHORS
+    Viacheslav Chimishuk <vchimishuk@yandex.ru>
+
+COPYING
+    This programm is released under the GNU General Public License version 3 or
+    later, which is distributed in the COPYING file. You should have received a
+    copy of the GNU General Public License along with this program.  If not,
+    see <http://www.gnu.org/licenses/>.

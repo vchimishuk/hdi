@@ -1,0 +1,12 @@
+/var/log/hdi.log {
+	weekly
+	missingok
+	rotate 4
+	compress
+	delaycompress
+	notifempty
+	create 0644 root root
+	postrotate
+		systemctl kill -s SIGHUP hdi.service
+	endscript
+}

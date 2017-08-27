@@ -1,0 +1,12 @@
+Source: hdi
+Section: main
+Priority: optional
+Maintainer: Viacheslav Chimishuk <vchimishuk@yandex.ru>
+Build-Depends: debhelper (>=9), golang-go, dh-golang
+Standards-Version: 3.9.4
+Homepage: https://github.com/vchimishuk/hdi
+
+Package: hdi
+Architecture: all
+Depends: hdparm
+Description: HDD idle daemon

@@ -1,0 +1,11 @@
+[Unit]
+Description=HDD idle daemon
+
+[Service]
+Type=simple
+ExecStart=/usr/bin/hdi --config=/etc/hdi.conf --log=/var/log/hdi.log
+User=root
+Group=root
+
+[Install]
+WantedBy=multi-user.target

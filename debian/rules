@@ -1,0 +1,33 @@
+#!/usr/bin/make -f
+# -*- makefile -*-
+
+export DH_VERBOSE=1
+export DH_OPTIONS
+export DH_GOPKG := github.com/vchimishuk/hdi
+
+BUILD_DIR=`pwd`/obj
+
+%:
+	dh $@ --buildsystem=golang --with=golang --builddirectory=$(BUILD_DIR)
+
+override_dh_auto_clean:
+	dh_auto_clean
+	rm -f hdi
+	rm -rf $(BUILD_DIR)
+
+override_dh_auto_build:
+	GOPATH=$(BUILD_DIR) go get -v github.com/vchimishuk/opt
+	dh_auto_build
+
+override_dh_auto_install:
+	install -g 0 -o 0 -d debian/hdi
+
+	install -g 0 -o 0 -d debian/hdi/usr/bin
+	cp $(BUILD_DIR)/bin/hdi debian/hdi/usr/bin
+	install -g 0 -o 0 -d debian/hdi/etc
+	cp hdi.conf debian/hdi/etc
+	install -g 0 -o 0 -d debian/hdi/lib/systemd/system/
+	cp hdi.service debian/hdi/lib/systemd/system/
+
+	install -g 0 -o 0 -d debian/hdi/etc/logrotate.d
+	cp hdi.logrotate debian/hdi/etc/logrotate.d/hdi
