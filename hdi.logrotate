@@ -1,5 +1,5 @@
 /var/log/hdi.log {
-	weekly
+	monthly
 	missingok
 	rotate 4
 	compress
