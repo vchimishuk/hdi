@@ -171,7 +171,7 @@ func main() {
 
 	if opts.Bool("help") {
 		fmt.Print(opt.Usage(optDescs))
-		os.Exit(1)
+		os.Exit(0)
 	}
 	if opts.Bool("version") {
 		fmt.Printf("%s %s", os.Args[0], Version)
