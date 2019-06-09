@@ -100,6 +100,16 @@ func execCmd(cmd config.Command) error {
 	return nil
 }
 
+func readStats() map[string]diskstats.DiskStat {
+	st, err := diskstats.ParseFile("/proc/diskstats")
+	if err != nil {
+		log.Printf("Failed to parse diskstats: %s", err)
+		st = make(map[string]diskstats.DiskStat)
+	}
+
+	return st
+}
+
 func mainLoop(cfg map[string]config.Device) {
 	type State struct {
 		Read     uint64
@@ -116,11 +126,7 @@ func mainLoop(cfg map[string]config.Device) {
 	}
 
 	for {
-		stats, err := diskstats.ParseFile("/proc/diskstats")
-		if err != nil {
-			log.Printf("Failed to parse diskstats: %s", err)
-			stats = make(map[string]diskstats.DiskStat)
-		}
+		stats := readStats()
 		for d, s := range stats {
 			if t, ok := states[d]; ok {
 				if s.Read != t.Read || s.Write != t.Write {
@@ -143,6 +149,13 @@ func mainLoop(cfg map[string]config.Device) {
 						log.Printf("Failed to spin down %s: %s", d, err)
 					}
 					t.SpunDown = true
+					// We need to update counters because
+					// some spin down utility (e. g. sdparm)
+					// may cause read/write counter increase
+					// just after its execution.
+					s := readStats()
+					t.Read = s[d].Read
+					t.Write = s[d].Write
 				}
 			}
 		}

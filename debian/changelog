@@ -1,3 +1,9 @@
+hdi (0.2.0) stable; urgency=low
+
+  * Fix repetitive spin down command execution when using sdparm.
+
+ -- Viacheslav Chimishuk <vchimishuk@yandex.ru>  Sun, 09 Jun 2019 21:45:00 +0300
+
 hdi (0.1.0) stable; urgency=low
 
   * Initial Release.
